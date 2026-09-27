@@ -2,13 +2,13 @@
 #include <stdlib.h>
 #include <math.h>
 
-#define MAXVALUE 20 // valor máximo de números na lista recebida
+#define MAXVALUE 50 // valor máximo de números na lista recebida, para controlar tamanho a ser alocado
 #define MINVALUE 1 // valor ´mínimo de números na lista recebida
 
-void selectionSrot(double *arr, int n);
-float fmedia(float *value, int n); //recebe ponteiro para lista de float e contagem dos valores
-float fmediana(float *value, int n);
-float fdesvio(float *value, int n, int media);
+void selectionSort(double *arr, int n);
+double fmedia(double *value, int n); //recebe ponteiro para lista de float e contagem dos valores
+double fmediana(double *value, int n);
+double fdesvio(double *value, int n, int media);
 
 
 int main() { 
@@ -27,22 +27,22 @@ int main() {
 	//checar se número recebido é válido
 	do 
 	{
-		scanf("%d \n", &cont_n);
+		scanf("%d", &cont_n);
 		if (cont_n > MAXVALUE || cont_n < MINVALUE) 
 		{
 			printf("Valor informado está fora do intervalo permitido");
 		}
 		else
 		{
-			is_valid = true
+			is_valid = true;
 		}
-	} while (!is_valid)
+	} while (!is_valid);
 	
 
 	//alocação dinâmica de números
-	double *qntde_num = malloc(cont_n* sizeof(float)); // guarda (cont_n) vezes o tamanho de um float
+	double *qntde_num = malloc(cont_n* sizeof(double)); // guarda (cont_n) vezes o tamanho de um float
 
-	if(qtde_num == NULL){// validar se deu certo alocar o espaço
+	if(qntde_num == NULL){// validar se deu certo alocar o espaço
         printf("Erro de alocação de memória");
 		return 1;
     }
@@ -50,7 +50,7 @@ int main() {
 	printf("Entre com os números: \n");
 
 	for (int i=0; i<cont_n; i++){
-		scanf("%lf", qntde_num[i]); // guardando em "indices" do qntde_num
+		scanf("%lf", &qntde_num[i]); // guardando em "indices" do qntde_num
 	}
 
 	selectionSort(&qntde_num[0],cont_n); // reordenar a lista para facilitar estatística
@@ -58,9 +58,9 @@ int main() {
 
 	min = qntde_num[0];
 	max = qntde_num[cont_n-1];
-	media = fMedia(&qntde_num[0],cont_n);
-	mediana = fMediana(&qntde_num[0],cont_n); 
-	d_padrao = fDesvio(&qntde_num[0],cont_n,media); //distância de cada valor da média, eleva ao quadrado as distancias, soma, divide por cont_n - 1 e tira raiz quadrada 
+	media = fmedia(&qntde_num[0],cont_n);
+	mediana = fmediana(&qntde_num[0],cont_n); 
+	d_padrao = fdesvio(&qntde_num[0],cont_n,media); //distância de cada valor da média, eleva ao quadrado as distancias, soma, divide por cont_n - 1 e tira raiz quadrada 
 
 
 	printf("Valor mínimo: %lf \n", min);
@@ -69,7 +69,7 @@ int main() {
 	printf("Mediana: %lf \n", mediana);
 	printf("Desvio Padrão: %lf \n", d_padrao);
 
-	free(qtde_num);
+	free(qntde_num);
 
 }
 
@@ -88,7 +88,7 @@ void selectionSort (double *arr, int n){ // função de ordenação para ordenar
 	}
 }
 
-float fmedia(float *value, int n) 
+double fmedia(double *value, int n) 
 {
 	double totalSum = 0;
 	for (int i = 0; i < n ; i++){
@@ -96,7 +96,7 @@ float fmedia(float *value, int n)
 	}
 	return totalSum/n;
 }
-float fmediana(float *value, int n)
+double fmediana(double *value, int n)
 {
 	if (n % 2 == 1) //mediana se número for impar
 	{
@@ -109,7 +109,7 @@ float fmediana(float *value, int n)
 		return (n1+n2) /2; // se número for par, mediana = média dos 2 números centrais
 	}
 }
-float fdesvio(float *value)
+double fdesvio(double *value, int n, int media)
 {
 	double desvio = 0;
 	for (int i=0; i<n; i++)
