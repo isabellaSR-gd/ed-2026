@@ -2,8 +2,10 @@
 #include <stdlib.h>
 #include <math.h>
 
-#define MAXVALUE 50 // valor máximo de números na lista recebida, para controlar tamanho a ser alocado
-#define MINVALUE 1 // valor ´mínimo de números na lista recebida
+#define MAXVALUE 50 
+//valor máximo de números na lista recebida, para controlar tamanho a ser alocado
+#define MINVALUE 1 
+//valor mínimo de números na lista recebida
 
 void selectionSort(double *arr, int n);
 double fmedia(double *value, int n); //recebe ponteiro para lista de float e contagem dos valores
